@@ -22,29 +22,10 @@ func sumDivisors(x []int) int {
 	return sum
 }
 
-func isAbundant(x int) bool {
-	if x >= 12 {
-		a := getDivisors(x)
-		b := sumDivisors(a)
-		if b > x {
-			return true
-		}
-	}
-	return false
-}
-
 func main() {
 
-	var abundvec []int
-	for i := 1; i < 28123; i++ {
-		if isAbundant(i) == true {
-			abundvec = append(abundvec, i)
-		}
-	}
-
-	test := getDivisors(20)
+	test := getDivisors(220)
 	test2 := sumDivisors(test)
-	test3 := isAbundant(20)
 
-	fmt.Println(test, test2, test3, abundvec)
+	fmt.Println(test, test2)
 }
