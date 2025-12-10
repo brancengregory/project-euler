@@ -3,3 +3,4 @@
 .RData
 .Ruserdata
 project-euler.Rproj
+target/
