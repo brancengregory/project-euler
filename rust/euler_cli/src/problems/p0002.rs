@@ -1,12 +1,5 @@
 use anyhow::Result;
-
-fn fibonacci(i: u32) -> u32 {
-    match i {
-        0 => return 0,
-        1 => return 1,
-        _ => fibonacci(i - 1) + fibonacci(i - 2)
-    }
-}
+use euler::fibonacci;
 
 pub fn solve() -> Result<String> {
     let mut fibonaccis = Vec::new();
@@ -19,6 +12,7 @@ pub fn solve() -> Result<String> {
     }
 
     let sum: u32 = fibonaccis.iter()
+        .filter(|&x| x % 2 == 0)
         .sum();
 
     Ok(sum.to_string())
