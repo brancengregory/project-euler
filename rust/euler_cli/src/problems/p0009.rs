@@ -1,6 +1,5 @@
 use anyhow::Result;
 
-//
 // Knowns:
 // a, b, c > 0
 // a < b < c
