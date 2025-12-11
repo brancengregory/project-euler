@@ -11,7 +11,7 @@ pub fn solve() -> Result<String> {
         i += 1;
     }
 
-    let sum: u32 = fibonaccis.iter()
+    let sum: u64 = fibonaccis.iter()
         .filter(|&x| x % 2 == 0)
         .sum();
 

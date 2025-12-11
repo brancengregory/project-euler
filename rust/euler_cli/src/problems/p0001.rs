@@ -4,7 +4,7 @@ use anyhow::Result;
 
 pub fn solve() -> Result<String> {
     // Logic for Problem 1
-    let sum: u32 = (0..1000)
+    let sum: u64 = (0..1000)
         .filter(|&x| x % 3 == 0 || x % 5 == 0)
         .sum();
 

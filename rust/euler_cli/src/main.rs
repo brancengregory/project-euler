@@ -19,6 +19,7 @@ fn main() -> Result<()> {
     let answer = match args.problem {
         1 => problems::p0001::solve()?,
         2 => problems::p0002::solve()?,
+        3 => problems::p0003::solve()?,
         _ => {
             println!("Problem {} is not implemented yet.", args.problem);
             return Ok(());
