@@ -34,6 +34,17 @@ pub fn primes_le(n: u64) -> Vec<u64> {
         .collect()
 }
 
+pub fn reverse_int(n: u64) -> u64 {
+    std::iter::successors(Some(n), |&x| (x >= 10).then_some(x / 10))
+        .map(|x| x % 10)
+        .fold(0, |acc, digit| acc * 10 + digit)
+}
+
+pub fn is_palindrome(n: u64) -> bool {
+    let rev = reverse_int(n);
+    n == rev
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -50,5 +61,10 @@ mod tests {
     #[test]
     fn test_primes() {
         assert_eq!(primes_le(12), vec![2, 3, 5, 7, 11]);
+    }
+
+    #[test]
+    fn test_reverse_int() {
+        assert_eq!(reverse_int(999888), 888999);
     }
 }
