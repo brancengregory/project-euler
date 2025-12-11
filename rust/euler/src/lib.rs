@@ -11,11 +11,11 @@ pub fn primes_le(n: u64) -> Vec<u64> {
     let nums: Vec<u64> = (2..=n).collect();
     let mut is_prime: Vec<bool> = vec![true; nums.len()];
 
-    for i in 0..n.isqrt() {
+    for i in 0..(n.isqrt()) {
         if is_prime[i as usize] {
             let mut x = nums[i as usize].pow(2);
 
-            while x <= (nums.len() + 2) as u64 {
+            while x <= (nums.len() + 1) as u64 {
                 is_prime[(x - 2) as usize] = false;
                 x += nums[i as usize];
             }
@@ -32,6 +32,22 @@ pub fn primes_le(n: u64) -> Vec<u64> {
             }
         })
         .collect()
+}
+
+pub fn primes(n: u64) -> Vec<u64> {
+    let upper_bound: u64 = if n < 6 {
+        13
+    } else {
+        // Use Rossers theorem to calculate upper bound for large n
+        let n = n as f64;
+        (n * (n.ln() + n.ln().ln())) as u64
+    };
+
+    primes_le(upper_bound).into_iter().take(n as usize).collect()
+}
+
+pub fn nth_prime(n: u64) -> u64 {
+    *primes(n).last().unwrap()
 }
 
 pub fn reverse_int(n: u64) -> u64 {
@@ -67,8 +83,23 @@ mod tests {
     }
 
     #[test]
-    fn test_primes() {
+    fn test_primes_le() {
         assert_eq!(primes_le(12), vec![2, 3, 5, 7, 11]);
+    }
+
+    #[test]
+    fn test_primes() {
+        assert_eq!(primes(5), vec![2, 3, 5, 7, 11]);
+        assert_eq!(primes(20), vec![
+            2, 3, 5, 7, 11, 13, 17,
+            19, 23, 29, 31, 37, 41,
+            43, 47, 53, 59, 61, 67, 71
+        ]);
+    }
+
+    #[test]
+    fn test_nth_prime() {
+        assert_eq!(nth_prime(12), 37);
     }
 
     #[test]
