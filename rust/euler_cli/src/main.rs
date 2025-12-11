@@ -21,6 +21,7 @@ fn main() -> Result<()> {
         2 => problems::p0002::solve()?,
         3 => problems::p0003::solve()?,
         4 => problems::p0004::solve()?,
+        5 => problems::p0005::solve()?,
         _ => {
             println!("Problem {} is not implemented yet.", args.problem);
             return Ok(());
