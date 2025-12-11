@@ -34,41 +34,44 @@ pub fn solve() -> Result<String> {
 
     let mut max_prod = 0;
 
-    for j in 0..height {
-        for i in 0..width {
-            let current = (i, j);
-            let current_val = input[i][j];
+    for r in 0..height {
+        for c in 0..width {
+            let current_val = input[r][c];
 
             // Right
-            if current.0 <= (width - n) {
-                max_prod = (1..=3)
-                    .map(|x| input[current.0 + x][current.1])
-                    .fold(current_val, |acc, x| acc * x)
-                    .max(max_prod)
+            if c + n <= width {
+                let prod = (1..n)
+                    .map(|x| input[r][c + x])
+                    .product::<u64>() * current_val;
+
+                if prod > max_prod { max_prod = prod; }
             }
 
             // Down
-            if current.1 <= (height - n) {
-                max_prod = (1..=3)
-                    .map(|x| input[current.0][current.1 + x])
-                    .fold(current_val, |acc, x| acc * x)
-                    .max(max_prod)
+            if r + n <= height {
+                let prod = (1..=3)
+                    .map(|x| input[r + x][c])
+                    .product::<u64>() * current_val;
+
+                if prod > max_prod { max_prod = prod; }
             }
 
-            // Forward Slash
-            if current.0 <= (width - n) && current.1 <= (height - n) {
-                max_prod = (1..=3)
-                    .map(|x| input[current.0 + x][current.1 + x])
-                    .fold(current_val, |acc, x| acc * x)
-                    .max(max_prod)
+            // Backward Slash (\)
+            if c + n <= width && r + n <= height {
+                let prod = (1..=3)
+                    .map(|x| input[r + x][c + x])
+                    .product::<u64>() * current_val;
+
+                if prod > max_prod { max_prod = prod; }
             }
 
-            // Backward Slash
-            if current.0 >= (n - 1) && current.1 <= (height - n) {
-                max_prod = (1..=3)
-                    .map(|x| input[current.0 - x][current.1 + x])
-                    .fold(current_val, |acc, x| acc * x)
-                    .max(max_prod)
+            // Forward Slash (/)
+            if c >= n - 1 && r + n <= height {
+                let prod = (1..=3)
+                    .map(|x| input[r + x][c - x])
+                    .product::<u64>() * current_val;
+
+                if prod > max_prod { max_prod = prod; }
             }
         }
     }
