@@ -45,6 +45,14 @@ pub fn is_palindrome(n: u64) -> bool {
     n == rev
 }
 
+pub fn sum_squares(n: u64) -> u64 {
+    (1..=n).map(|x| x.pow(2)).sum()
+}
+
+pub fn squared_sum(n: u64) -> u64 {
+    (1..=n).sum::<u64>().pow(2)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -66,5 +74,21 @@ mod tests {
     #[test]
     fn test_reverse_int() {
         assert_eq!(reverse_int(999888), 888999);
+    }
+
+    #[test]
+    fn test_is_palindrome() {
+        assert_eq!(is_palindrome(9987899), true);
+        assert_eq!(is_palindrome(123456), false);
+    }
+
+    #[test]
+    fn test_sum_squares() {
+        assert_eq!(sum_squares(10), 385);
+    }
+
+    #[test]
+    fn test_squared_sum() {
+        assert_eq!(squared_sum(10), 3025);
     }
 }
