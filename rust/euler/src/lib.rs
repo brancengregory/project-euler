@@ -17,6 +17,14 @@ pub fn triangle_numbers(n: u64) -> Vec<u64> {
         .collect()
 }
 
+pub fn triangle_iter() -> impl Iterator<Item = u64> {
+    (1..).scan(1, |state, i| {
+        let current_value = *state;
+        *state = current_value + i + 1;
+        Some(current_value)
+    })
+}
+
 pub fn primes_le(n: u64) -> Vec<u64> {
     let nums: Vec<u64> = (2..=n).collect();
     let mut is_prime: Vec<bool> = vec![true; nums.len()];
