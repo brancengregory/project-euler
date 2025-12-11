@@ -79,6 +79,34 @@ pub fn squared_sum(n: u64) -> u64 {
     (1..=n).sum::<u64>().pow(2)
 }
 
+pub fn divisors(i: u64) -> Vec<u64> {
+    let limit = i.isqrt();
+
+    let mut divisors: Vec<u64> = Vec::new();
+
+    for x in 1..=limit {
+        if i.is_multiple_of(x) {
+            divisors.push(x);
+
+            if x * x != i {
+                divisors.push(i / x);
+            }
+        }
+    }
+
+    divisors.sort_unstable();
+    divisors
+}
+
+pub fn n_divisors(i: u64) -> u64 {
+    let limit = i.isqrt();
+
+    (1..=limit)
+        .filter(|&x| i.is_multiple_of(x))
+        .map(|x| if x * x == i { 1 } else { 2 })
+        .sum()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -137,5 +165,15 @@ mod tests {
     #[test]
     fn test_squared_sum() {
         assert_eq!(squared_sum(10), 3025);
+    }
+
+    #[test]
+    fn test_divisors() {
+        assert_eq!(divisors(10), vec![1, 2, 5, 10]);
+    }
+
+    #[test]
+    fn test_n_divisors() {
+        assert_eq!(n_divisors(10), 4);
     }
 }
