@@ -7,6 +7,16 @@ pub fn fibonacci(i: u64) -> u64 {
     }
 }
 
+pub fn triangle_numbers(n: u64) -> Vec<u64> {
+    (1..).scan(1, |state, i| {
+        let current_value = *state;
+        *state = current_value + i + 1;
+        Some(current_value)
+    })
+        .take(n as usize)
+        .collect()
+}
+
 pub fn primes_le(n: u64) -> Vec<u64> {
     let nums: Vec<u64> = (2..=n).collect();
     let mut is_prime: Vec<bool> = vec![true; nums.len()];
@@ -80,6 +90,12 @@ mod tests {
         assert_eq!(fibonacci(2), 2);
         assert_eq!(fibonacci(3), 3);
         assert_eq!(fibonacci(10), 89);
+    }
+
+    #[test]
+    fn test_triangle_numbers() {
+        assert_eq!(triangle_numbers(0), vec![]);
+        assert_eq!(triangle_numbers(6), vec![1, 3, 6, 10, 15, 21]);
     }
 
     #[test]
