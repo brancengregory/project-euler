@@ -13,7 +13,7 @@ struct Cli {
 
 fn main() -> Result<()> {
     let args = Cli::parse();
-    
+
     println!("Running Problem {}...", args.problem);
 
     let answer = match args.problem {
@@ -30,6 +30,7 @@ fn main() -> Result<()> {
         11 => problems::p0011::solve()?,
         12 => problems::p0012::solve()?,
         13 => problems::p0013::solve()?,
+        14 => problems::p0014::solve()?,
         _ => {
             println!("Problem {} is not implemented yet.", args.problem);
             return Ok(());
