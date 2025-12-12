@@ -121,6 +121,94 @@ pub fn factorial(i: u64) -> BigUint {
     (1..=i).product()
 }
 
+pub fn n_digits(i: u64) -> u64 {
+    match i {
+        0 => 1,
+        _ => (i.ilog10() + 1).into()
+    }
+}
+
+pub fn num_to_words(i: u64) -> String {
+    let ones = vec!["zero", "one", "two", "three", "four", "five",
+        "six", "seven", "eight", "nine"]; 
+    let teens = vec!["ten", "eleven", "twelve", "thirteen", "fourteen",
+        "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+    let tens = vec!["twenty", "thirty", "forty", "fifty",
+        "sixty", "seventy", "eighty", "ninety"];
+ 
+    let mut words: Vec<&str> = Vec::new();
+
+    if i < 10 {
+        return ones[i as usize].to_string()
+    } else if i < 20 {
+        return teens[(i - 10) as usize].to_string()
+    } else if i < 100 {
+        let ones_digit = i % 10;
+        
+        if ones_digit != 0 {
+            words.push(ones[ones_digit as usize]);
+            words.push(" ");
+        }
+
+        let tens_digit = i / 10; 
+        words.push(tens[(tens_digit - 2) as usize]);
+
+        return words.into_iter().rev().collect::<String>()
+    } else if i < 1000 {
+        let ones_digit = i % 10;
+        let tens_digit = (i / 10) % 10;
+        let hundreds_digit = (i / 100) % 10;
+
+        if tens_digit == 1 {
+            words.push(teens[(ones_digit) as usize]);
+            words.push(" and ");
+            words.push("hundred");
+            words.push(" ");
+            words.push(ones[hundreds_digit as usize]);
+
+            return words.into_iter().rev().collect::<String>()
+        } 
+        if ones_digit == 0 && tens_digit == 0 {
+            words.push("hundred");
+            words.push(" ");
+            words.push(ones[hundreds_digit as usize]);
+
+            return words.into_iter().rev().collect::<String>()
+        } else if ones_digit == 0 {
+            words.push(tens[(tens_digit - 2) as usize]);
+            words.push(" and ");
+            words.push("hundred");
+            words.push(" ");
+            words.push(ones[hundreds_digit as usize]);
+
+            return words.into_iter().rev().collect::<String>()
+        } else if tens_digit == 0 {
+            words.push(ones[ones_digit as usize]);
+            words.push(" and ");
+            words.push("hundred");
+            words.push(" ");
+            words.push(ones[hundreds_digit as usize]);
+
+            return words.into_iter().rev().collect::<String>()
+        } else {
+            words.push(ones[ones_digit as usize]);
+            words.push(" ");
+            words.push(tens[(tens_digit - 2) as usize]);
+            words.push(" and ");
+            words.push("hundred");
+            words.push(" ");
+            words.push(ones[hundreds_digit as usize]);
+
+            return words.into_iter().rev().collect::<String>()
+        }
+    } else if i == 1000 {
+        words.push("one thousand");
+        return words.into_iter().collect::<String>()
+    }
+
+    panic!("Words not implemented for numbers greater than 1,000");
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -194,5 +282,28 @@ mod tests {
     #[test]
     fn test_factorial() {
         assert_eq!(factorial(10), BigUint::from(3628800_u32));
+    }
+
+    #[test]
+    fn test_n_digits() {
+        assert_eq!(n_digits(0), 1);
+        assert_eq!(n_digits(9), 1);
+        assert_eq!(n_digits(12), 2);
+        assert_eq!(n_digits(124), 3);
+        assert_eq!(n_digits(1245), 4);
+    }
+
+    #[test]
+    fn test_num_to_words() {
+        assert_eq!(num_to_words(0), "zero".to_string());
+        assert_eq!(num_to_words(3), "three".to_string());
+        assert_eq!(num_to_words(10), "ten".to_string());
+        assert_eq!(num_to_words(12), "twelve".to_string());
+        assert_eq!(num_to_words(30), "thirty".to_string());
+        assert_eq!(num_to_words(52), "fifty two".to_string());
+        assert_eq!(num_to_words(200), "two hundred".to_string());
+        assert_eq!(num_to_words(212), "two hundred and twelve".to_string());
+        assert_eq!(num_to_words(234), "two hundred and thirty four".to_string());
+        assert_eq!(num_to_words(1000), "one thousand".to_string());
     }
 }
