@@ -117,6 +117,30 @@ pub fn n_divisors(i: u64) -> u64 {
         .sum()
 }
 
+pub fn sum_divisors(i: u64) -> u64 {
+    let divisors = divisors(i);
+    divisors.iter().sum()
+}
+
+pub fn proper_divisors(i: u64) -> Vec<u64> {
+    let divisors = divisors(i);
+    if divisors.len() > 1 {
+        return divisors[0..(divisors.len() - 1)].to_vec()
+    }
+
+    return divisors
+}
+
+pub fn sum_proper_divisors(i: u64) -> u64 {
+    let proper_divisors = proper_divisors(i);
+    proper_divisors.iter().sum()
+}
+
+pub fn is_amicable(i: u64) -> bool {
+    let proper_divisor_sum = sum_proper_divisors(i);
+    i != proper_divisor_sum && i == sum_proper_divisors(proper_divisor_sum)
+}
+
 pub fn factorial(i: u64) -> BigUint {
     (1..=i).product()
 }
@@ -277,6 +301,11 @@ mod tests {
     #[test]
     fn test_n_divisors() {
         assert_eq!(n_divisors(10), 4);
+    }
+
+    #[test]
+    fn test_sum_divisors() {
+        assert_eq!(sum_divisors(10), 18);
     }
 
     #[test]
