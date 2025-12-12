@@ -124,6 +124,7 @@ dependencies = [
  "anyhow",
  "clap",
  "euler",
+ "num",
 ]
 
 [[package]]

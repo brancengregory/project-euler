@@ -7,6 +7,7 @@ edition = "2024"
 euler = { path = "../euler" }
 anyhow = "1.0.100"
 clap = { version = "4.5.53", features = ["derive"] }
+num = "0.4.3"
 
 [[bin]]
 name = "euler"
