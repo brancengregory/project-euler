@@ -1,3 +1,5 @@
+use num::BigUint;
+
 pub fn fibonacci(i: u64) -> u64 {
     match i {
         0 => 0,
@@ -115,6 +117,10 @@ pub fn n_divisors(i: u64) -> u64 {
         .sum()
 }
 
+pub fn factorial(i: u64) -> BigUint {
+    (1..=i).product()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -183,5 +189,10 @@ mod tests {
     #[test]
     fn test_n_divisors() {
         assert_eq!(n_divisors(10), 4);
+    }
+
+    #[test]
+    fn test_factorial() {
+        assert_eq!(factorial(10), BigUint::from(3628800_u32));
     }
 }
