@@ -34,6 +34,7 @@ fn main() -> Result<()> {
         15 => problems::p0015::solve()?,
         16 => problems::p0016::solve()?,
         17 => problems::p0017::solve()?,
+        19 => problems::p0019::solve()?,
         20 => problems::p0020::solve()?,
         21 => problems::p0021::solve()?,
         _ => {
