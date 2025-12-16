@@ -233,6 +233,34 @@ pub fn num_to_words(i: u64) -> String {
     panic!("Words not implemented for numbers greater than 1,000");
 }
 
+pub fn num_to_digits(n: u64) -> Vec<u8> {
+    let mut digits: Vec<u8> = Vec::new();
+    let mut num = n;
+
+    if num == 0 {
+        return vec![0]
+    }
+    
+    while num > 0 {
+        digits.push((num % 10) as u8);
+        num /= 10;
+    }
+
+    digits.reverse();
+
+    digits
+}
+
+pub fn digits_to_num(digits: &[u8]) -> u64 {
+    if digits.is_empty() {
+        panic!("No digits provided")
+    }
+    
+    digits.iter().rev().enumerate().fold(0_u64, |acc, (i, &x)| {
+        acc + (x as u64 * 10_u64.pow(i as u32))
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -334,5 +362,19 @@ mod tests {
         assert_eq!(num_to_words(212), "two hundred and twelve".to_string());
         assert_eq!(num_to_words(234), "two hundred and thirty four".to_string());
         assert_eq!(num_to_words(1000), "one thousand".to_string());
+    }
+
+    #[test]
+    fn test_num_to_digits() {
+        assert_eq!(num_to_digits(0), vec![0]);
+        assert_eq!(num_to_digits(100), vec![1, 0, 0]);
+        assert_eq!(num_to_digits(124654116180), vec![1, 2, 4, 6, 5, 4, 1, 1, 6, 1, 8, 0]);
+    }
+
+    #[test]
+    fn test_digits_to_num() {
+        assert_eq!(digits_to_num(&vec![0]), 0);
+        assert_eq!(digits_to_num(&vec![1, 0, 0]), 100);
+        assert_eq!(digits_to_num(&vec![1, 2, 4, 6, 5, 4, 1, 1, 6, 1, 8, 0]), 124654116180);
     }
 }
