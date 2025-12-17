@@ -271,6 +271,16 @@ pub fn is_pandigital(n: u64) -> bool {
 	(1..=9).all(|d| digits.contains(&d))
 }
 
+pub fn is_n_pandigital(i: u64, n: u64) -> bool {
+	let digits = num_to_digits(i);
+
+	if digits.len() != n as usize {
+		return false;
+	}
+
+	(1..=n).all(|d| digits.contains(&(d as u8)))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -393,5 +403,12 @@ mod tests {
         assert_eq!(is_pandigital(0), false);
         assert_eq!(is_pandigital(123456788), false);
         assert_eq!(is_pandigital(123456789), true);
+    }
+
+    #[test]
+    fn test_is_n_pandigital() {
+        assert_eq!(is_n_pandigital(0, 1), false);
+        assert_eq!(is_n_pandigital(1, 1), true);
+        assert_eq!(is_n_pandigital(321, 3), true);
     }
 }
