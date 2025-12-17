@@ -27,6 +27,13 @@ pub fn triangle_iter() -> impl Iterator<Item = u64> {
     })
 }
 
+pub fn is_triangular(n: u64) -> bool {
+    let test = 1.0 + 8.0 * n as f64;
+    let root = test.sqrt();
+
+    root.fract() == 0.0 && (-1.0 + root) % 2.0 == 0.0
+}
+
 pub fn pentagon_iter() -> impl Iterator<Item = u64> {
     let mut i = 1;
     std::iter::from_fn(move || {
@@ -41,6 +48,22 @@ pub fn is_pentagonal(n: u64) -> bool {
     let root = test.sqrt();
 
     root.fract() == 0.0 && (1.0 + root) % 6.0 == 0.0
+}
+
+pub fn hexagon_iter() -> impl Iterator<Item = u64> {
+    let mut i = 1;
+    std::iter::from_fn(move || {
+        let n = i;
+        i += 1;
+        Some(n * ((2 * n) - 1))
+    })
+}
+
+pub fn is_hexagonal(n: u64) -> bool {
+    let test = 1.0 + 8.0 * n as f64;
+    let root = test.sqrt();
+
+    root.fract() == 0.0 && (1.0 + root) % 4.0 == 0.0
 }
 
 pub fn primes_le(n: u64) -> Vec<u64> {
@@ -340,6 +363,19 @@ mod tests {
         assert_eq!(pentagon_iter().take(5).all(is_pentagonal), true);
     }
 
+    #[test]
+    fn test_hexagon_iter() {
+        assert_eq!(hexagon_iter().map(|x| x * 2).take(3).collect::<Vec<_>>(), vec![2, 12, 30]);
+        assert_eq!(hexagon_iter().take(5).collect::<Vec<_>>(), vec![1, 6, 15, 28, 45]);
+    }
+
+    #[test]
+    fn test_is_hexagonal() {
+        assert_eq!(is_hexagonal(2), false);
+        assert_eq!(is_hexagonal(0), false);
+        assert_eq!(is_hexagonal(6), true);
+        assert_eq!(hexagon_iter().take(5).all(is_hexagonal), true);
+    }
     #[test]
     fn test_primes_le() {
         assert_eq!(primes_le(12), vec![2, 3, 5, 7, 11]);
