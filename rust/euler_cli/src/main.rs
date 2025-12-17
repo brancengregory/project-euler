@@ -43,6 +43,7 @@ fn main() -> Result<()> {
         35 => problems::p0035::solve()?,
         36 => problems::p0036::solve()?,
         37 => problems::p0037::solve()?,
+        38 => problems::p0038::solve()?,
         _ => {
             println!("Problem {} is not implemented yet.", args.problem);
             return Ok(());

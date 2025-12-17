@@ -39,7 +39,7 @@ pub fn primes_le(n: u64) -> Vec<u64> {
                 is_prime[(x - 2) as usize] = false;
                 x += nums[i as usize];
             }
-            
+
         }
     }
 
@@ -154,12 +154,12 @@ pub fn n_digits(i: u64) -> u64 {
 
 pub fn num_to_words(i: u64) -> String {
     let ones = vec!["zero", "one", "two", "three", "four", "five",
-        "six", "seven", "eight", "nine"]; 
+        "six", "seven", "eight", "nine"];
     let teens = vec!["ten", "eleven", "twelve", "thirteen", "fourteen",
         "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
     let tens = vec!["twenty", "thirty", "forty", "fifty",
         "sixty", "seventy", "eighty", "ninety"];
- 
+
     let mut words: Vec<&str> = Vec::new();
 
     if i < 10 {
@@ -168,13 +168,13 @@ pub fn num_to_words(i: u64) -> String {
         return teens[(i - 10) as usize].to_string()
     } else if i < 100 {
         let ones_digit = i % 10;
-        
+
         if ones_digit != 0 {
             words.push(ones[ones_digit as usize]);
             words.push(" ");
         }
 
-        let tens_digit = i / 10; 
+        let tens_digit = i / 10;
         words.push(tens[(tens_digit - 2) as usize]);
 
         return words.into_iter().rev().collect::<String>()
@@ -191,7 +191,7 @@ pub fn num_to_words(i: u64) -> String {
             words.push(ones[hundreds_digit as usize]);
 
             return words.into_iter().rev().collect::<String>()
-        } 
+        }
         if ones_digit == 0 && tens_digit == 0 {
             words.push("hundred");
             words.push(" ");
@@ -240,7 +240,7 @@ pub fn num_to_digits(n: u64) -> Vec<u8> {
     if num == 0 {
         return vec![0]
     }
-    
+
     while num > 0 {
         digits.push((num % 10) as u8);
         num /= 10;
@@ -255,10 +255,20 @@ pub fn digits_to_num(digits: &[u8]) -> u64 {
     if digits.is_empty() {
         panic!("No digits provided")
     }
-    
+
     digits.iter().rev().enumerate().fold(0_u64, |acc, (i, &x)| {
         acc + (x as u64 * 10_u64.pow(i as u32))
     })
+}
+
+pub fn is_pandigital(n: u64) -> bool {
+	let digits = num_to_digits(n);
+
+	if digits.len() != 9 {
+		return false;
+	}
+
+	(1..=9).all(|d| digits.contains(&d))
 }
 
 #[cfg(test)]
@@ -376,5 +386,12 @@ mod tests {
         assert_eq!(digits_to_num(&vec![0]), 0);
         assert_eq!(digits_to_num(&vec![1, 0, 0]), 100);
         assert_eq!(digits_to_num(&vec![1, 2, 4, 6, 5, 4, 1, 1, 6, 1, 8, 0]), 124654116180);
+    }
+
+    #[test]
+    fn test_is_pandigital() {
+        assert_eq!(is_pandigital(0), false);
+        assert_eq!(is_pandigital(123456788), false);
+        assert_eq!(is_pandigital(123456789), true);
     }
 }
