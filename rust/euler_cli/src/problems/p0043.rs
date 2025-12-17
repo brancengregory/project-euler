@@ -1,5 +1,5 @@
 use anyhow::Result;
-use euler::{primes, num_to_digits, digits_to_num, is_zero_pandigital};
+use euler::{primes, digits_to_num};
 use itertools::Itertools;
 
 fn is_substring_divisble(digits: &Vec<u8>) -> bool {
