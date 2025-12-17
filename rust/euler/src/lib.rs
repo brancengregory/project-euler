@@ -27,6 +27,22 @@ pub fn triangle_iter() -> impl Iterator<Item = u64> {
     })
 }
 
+pub fn pentagon_iter() -> impl Iterator<Item = u64> {
+    let mut i = 1;
+    std::iter::from_fn(move || {
+        let n = i;
+        i += 1;
+        Some((n * ((3 * n) - 1)) / 2)
+    })
+}
+
+pub fn is_pentagonal(n: u64) -> bool {
+    let test = 1.0 + 24.0 * n as f64;
+    let root = test.sqrt();
+
+    root.fract() == 0.0 && (1.0 + root) % 6.0 == 0.0
+}
+
 pub fn primes_le(n: u64) -> Vec<u64> {
     let nums: Vec<u64> = (2..=n).collect();
     let mut is_prime: Vec<bool> = vec![true; nums.len()];
@@ -308,6 +324,20 @@ mod tests {
     fn test_triangle_numbers() {
         assert_eq!(triangle_numbers(0), vec![]);
         assert_eq!(triangle_numbers(6), vec![1, 3, 6, 10, 15, 21]);
+    }
+
+    #[test]
+    fn test_pentagon_iter() {
+        assert_eq!(pentagon_iter().map(|x| x * 2).take(3).collect::<Vec<_>>(), vec![2, 10, 24]);
+        assert_eq!(pentagon_iter().take(5).collect::<Vec<_>>(), vec![1, 5, 12, 22, 35]);
+    }
+
+    #[test]
+    fn test_is_pentagonal() {
+        assert_eq!(is_pentagonal(2), false);
+        assert_eq!(is_pentagonal(0), false);
+        assert_eq!(is_pentagonal(5), true);
+        assert_eq!(pentagon_iter().take(5).all(is_pentagonal), true);
     }
 
     #[test]
