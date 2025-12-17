@@ -271,6 +271,16 @@ pub fn is_pandigital(n: u64) -> bool {
 	(1..=9).all(|d| digits.contains(&d))
 }
 
+pub fn is_zero_pandigital(i: u64) -> bool {
+	let digits = num_to_digits(i);
+
+	if digits.len() != 10 as usize {
+		return false;
+	}
+
+	(0..=10).all(|d| digits.contains(&(d as u8)))
+}
+
 pub fn is_n_pandigital(i: u64, n: u64) -> bool {
 	let digits = num_to_digits(i);
 
