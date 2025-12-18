@@ -330,6 +330,16 @@ pub fn is_n_pandigital(i: u64, n: u64) -> bool {
 	(1..=n).all(|d| digits.contains(&(d as u8)))
 }
 
+pub fn are_permutations(a: u64, b: u64) -> bool {
+    let mut d_a = num_to_digits(a);
+    let mut d_b = num_to_digits(b);
+
+    d_a.sort();
+    d_b.sort();
+
+    d_a == d_b
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -486,5 +496,11 @@ mod tests {
         assert_eq!(is_n_pandigital(0, 1), false);
         assert_eq!(is_n_pandigital(1, 1), true);
         assert_eq!(is_n_pandigital(321, 3), true);
+    }
+
+    #[test]
+    fn test_are_permutations() {
+        assert_eq!(are_permutations(0, 1), false);
+        assert_eq!(are_permutations(1234, 2413), true);
     }
 }
