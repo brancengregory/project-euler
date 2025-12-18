@@ -109,6 +109,36 @@ pub fn nth_prime(n: u64) -> u64 {
     *primes(n).last().unwrap()
 }
 
+pub fn prime_factors(mut n: u64) -> Vec<u64> {
+    let mut prime_factors: Vec<u64> = Vec::new();
+
+    while n % 2 == 0 {
+        prime_factors.push(2);
+        n /= 2;
+    }
+
+    let mut d = 3;
+    while d * d <= n {
+        while n % d == 0 {
+            prime_factors.push(d);
+            n /= d;
+        }
+        d += 2;
+    }
+
+    if n > 1 {
+        prime_factors.push(n);
+    }
+    
+    prime_factors
+}
+
+pub fn distinct_prime_factors(n: u64) -> Vec<u64> {
+    let mut prime_factors = prime_factors(n);
+    prime_factors.dedup();
+    prime_factors
+}
+
 pub fn reverse_int(n: u64) -> u64 {
     std::iter::successors(Some(n), |&x| (x >= 10).then_some(x / 10))
         .map(|x| x % 10)
@@ -404,6 +434,20 @@ mod tests {
     #[test]
     fn test_nth_prime() {
         assert_eq!(nth_prime(12), 37);
+    }
+
+    #[test]
+    fn test_prime_factors() {
+        assert_eq!(prime_factors(12), vec![2, 2, 3]);
+        assert_eq!(prime_factors(1), vec![]);
+        assert_eq!(prime_factors(13), vec![13]);
+    }
+
+    #[test]
+    fn test_distinct_prime_factors() {
+        assert_eq!(distinct_prime_factors(12), vec![2, 3]);
+        assert_eq!(prime_factors(1), vec![]);
+        assert_eq!(prime_factors(13), vec![13]);
     }
 
     #[test]
