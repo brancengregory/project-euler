@@ -12,10 +12,10 @@ use euler::{is_pandigital, digits_to_num};
 // Likely to start with a 9
 
 pub fn solve() -> Result<String> {
-	let largest_pandigital = 987654321;
-	let smallest_pandigital = 123456789;
+	let _largest_pandigital = 987654321;
+	let _smallest_pandigital = 123456789;
 
-	let pandigitals: Vec<_> = (1..=9).permutations(9)
+	let _pandigitals: Vec<_> = (1..=9).permutations(9)
 		.map(|x| {
 			digits_to_num(x.as_slice())
 		})
