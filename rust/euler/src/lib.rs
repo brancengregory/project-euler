@@ -129,7 +129,7 @@ pub fn prime_factors(mut n: u64) -> Vec<u64> {
     if n > 1 {
         prime_factors.push(n);
     }
-    
+
     prime_factors
 }
 
