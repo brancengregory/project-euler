@@ -77,11 +77,12 @@ pub fn is_hexagonal(n: u64) -> bool {
 
 pub fn is_prime(n: u64) -> bool {
 	match n {
-		0 => false,
-		1 => false,
+		0 | 1 => false,
 		2 => true,
+		_ if n % 2 == 0 => false,
 		_ => {
-			!(2..n).any(|i| n % i == 0)
+			let limit = (n as f64).sqrt() as u64;
+			!(3..=limit).step_by(2).any(|i| n % i == 0)
 		}
 	}
 }
