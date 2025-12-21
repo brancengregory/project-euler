@@ -75,6 +75,17 @@ pub fn is_hexagonal(n: u64) -> bool {
     root.fract() == 0.0 && (1.0 + root) % 4.0 == 0.0
 }
 
+pub fn is_prime(n: u64) -> bool {
+	match n {
+		0 => false,
+		1 => false,
+		2 => true,
+		_ => {
+			!(2..n).any(|i| n % i == 0)
+		}
+	}
+}
+
 pub fn primes_le(n: u64) -> Vec<u64> {
     let nums: Vec<u64> = (2..=n).collect();
     let mut is_prime: Vec<bool> = vec![true; nums.len()];
@@ -426,6 +437,16 @@ mod tests {
         assert_eq!(is_hexagonal(6), true);
         assert_eq!(hexagon_iter().take(5).all(is_hexagonal), true);
     }
+
+    #[test]
+    fn test_is_prime() {
+        assert_eq!(is_prime(12), false);
+        assert_eq!(is_prime(0), false);
+        assert_eq!(is_prime(1), false);
+        assert_eq!(is_prime(2), true);
+        assert_eq!(is_prime(13), true);
+    }
+
     #[test]
     fn test_primes_le() {
         assert_eq!(primes_le(12), vec![2, 3, 5, 7, 11]);
